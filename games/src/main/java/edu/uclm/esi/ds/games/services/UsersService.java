@@ -20,7 +20,13 @@ public class UsersService {
 		user.setEmail(email);
 		user.setPwd(pwd);
 		
-		this.userDAO.save(user);
+		User aux = this.userDAO.findByName(name);
+		
+		if(aux != null)
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Ya existe este usuario");
+		else{
+			this.userDAO.save(user);
+		}
 	}
 	
 	public void login(String name, String pwd){
@@ -34,5 +40,6 @@ public class UsersService {
 		if(!user.getPwd().equals(pwdEncripted))
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Credenciales Inválidas");
 	}
+
 
 }

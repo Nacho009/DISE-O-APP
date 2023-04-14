@@ -1,15 +1,26 @@
-<div *ngIf="!loginCorrecto">
-    <p>login works!</p>
 
-    <input type="text" [(ngModel)]='name' placeholder="nombre">
-    <br>
-    <input type="pwd1" [(ngModel)]='pwd1' placeholder="contraseña">
-    <br>
-    <button (click)="login()"> crear Cuenta</button>
-    <br>
-</div>
+<h2>Login</h2>
 
-<div> {{ message }} </div>
-<div *ngIf="loginCorrecto">
-    <a href ="#" (click)="requestGame()">Jugar </a>
-</div>
+ 
+  <div class="imgcontainer">
+    <img src="../../assets/avatar.png" alt="Avatar" class="avatar">
+  </div>
+
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username"    [(ngModel)]  = "model.username">
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password"  [(ngModel)]   = "model.password">
+        
+    <button type="submit" (click)="loginUser()">Login</button>
+    <label>
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label>
+  </div>
+
+  <div class="container" style="background-color:#f1f1f1">
+    <button type="button" class="cancelbtn">Cancel</button>
+    <span class="psw">Forgot <a href="#">password?</a></span>
+  </div>
+ 

@@ -1,47 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AccountService } from '../account.service';
-import { GamesService } from '../games.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  getData!: boolean;
+  model: any = {};
+ 
 
-  name? : string;
-  pwd1? : string;
-  message? : string
-  loginCorrecto : boolean = false
+  constructor(
+    private router: Router, private userService: AccountService
+   
+  ) {}
 
-  constructor(private accountService : AccountService,
-    private gamesService : GamesService){
-    
-  }
-  ngOnInit(): void{
-
+  ngOnInit() {
   }
 
-  login(){
-    let info = {
-      name : this.name,
-      pwd1 : this.pwd1
-    }
+  loginUser() {
+   
 
-    this.accountService.login(info).subscribe(
-      respuesta => {
-        this.message = "hola, " + this.name
-        this.loginCorrecto = true
-      },
-      error => {
-        this.message = "ha habido un error"
-        this.loginCorrecto = false
+    var user = this.model.username;
+    var password = this.model.password;
 
-      }
-    )
-  }
+     
+    // this.userservice.getUserData(user, password)
+    //   .subscribe((res: boolean) => {
+    //     this.getData = res;
+        
 
-  requestGame(){
-      this.gamesService.requestGame()
-  }
+    //     if (this.getData == true) {
+         
+    //      this.router.navigate(["/home"])
+    //     } else {
+    //      alert("Invalid users")
+    //     }
+    //   });
+}
 }
