@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,6 +20,7 @@ import edu.uclm.esi.ds.games.services.GamesService;
 import edu.uclm.esi.ds.games.services.UsersService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("users")
 public class UsersController {
 	
@@ -26,7 +28,7 @@ public class UsersController {
 	private UsersService usersService;
 	
 	@PostMapping("/register") //con games y esto nuestra url sera: http:/-----/games/solicitarPartida
-	public void register(@RequestBody Map<String, Object> info) { //Request param es para que sea un parametro de la url
+	public String register(@RequestBody Map<String, Object> info) { //Request param es para que sea un parametro de la url
 		
 		String name = info.get("name").toString();
 		String email = info.get("email").toString();
@@ -42,10 +44,11 @@ public class UsersController {
 			throw new ResponseStatusException(HttpStatus.CONFLICT);
 		}
 
+		return "SI";
 	}
 	
 	@PutMapping("/login") //con games y esto nuestra url sera: http:/-----/games/solicitarPartida
-	public void login(@RequestBody Map<String, Object> info) { //Request param es para que sea un parametro de la url
+	public String login(@RequestBody Map<String, Object> info) { //Request param es para que sea un parametro de la url
 		
 		String name = info.get("name").toString();
 		String pwd = info.get("pwd").toString();
@@ -56,6 +59,7 @@ public class UsersController {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
 
+		return "SI";
 	}
 	
 	

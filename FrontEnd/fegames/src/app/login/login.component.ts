@@ -23,21 +23,13 @@ export class LoginComponent implements OnInit {
   loginUser() {
    
 
-    var user = this.model.username;
-    var password = this.model.password;
+    const loginData = {
+      name: this.model.username,
+      pwd: this.model.password
+    };
 
+    this.userService.login(JSON.stringify(loginData));
      
-    // this.userservice.getUserData(user, password)
-    //   .subscribe((res: boolean) => {
-    //     this.getData = res;
-        
-
-    //     if (this.getData == true) {
-         
-    //      this.router.navigate(["/home"])
-    //     } else {
-    //      alert("Invalid users")
-    //     }
-    //   });
+    
 }
 }

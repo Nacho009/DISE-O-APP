@@ -22,5 +22,14 @@ export class RegisterComponent implements OnInit{
 
   registerUser(){
 
+    const registerData = {
+      name: this.model.username,
+      email: this.model.email,
+      pwd1: this.model.password,
+      pwd2: this.model.cpassword
+    };
+
+    console.log(JSON.stringify(registerData))
+    this.userService.register(JSON.stringify(registerData));
   }
 }
