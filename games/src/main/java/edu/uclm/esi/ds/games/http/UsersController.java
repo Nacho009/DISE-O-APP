@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -47,19 +49,17 @@ public class UsersController {
 		return "SI";
 	}
 	
-	@PutMapping("/login") //con games y esto nuestra url sera: http:/-----/games/solicitarPartida
-	public String login(@RequestBody Map<String, Object> info) { //Request param es para que sea un parametro de la url
-		
-		String name = info.get("name").toString();
-		String pwd = info.get("pwd").toString();
-		
-		try {
-			this.usersService.login(name,pwd);
-		}catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
-
-		return "SI";
+	@PutMapping("/login")
+	public ResponseEntity<Object> login(@RequestBody Map<String, Object> info) {
+	  String name = info.get("name").toString();
+	  String pwd = info.get("pwd").toString();
+	  
+	  try {
+		this.usersService.login(name, pwd);
+		return ResponseEntity.ok().body("{\"message\": \"Inicio de sesión exitoso\"}");
+	  } catch (Exception e) {
+		throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+	  }
 	}
 	
 	
