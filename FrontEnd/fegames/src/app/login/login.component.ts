@@ -30,6 +30,8 @@ export class LoginComponent implements OnInit {
 
     this.userService.login(JSON.stringify(loginData));
 
+    console.log(JSON.stringify(loginData));
+
      
     
 }
