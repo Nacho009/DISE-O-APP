@@ -29,7 +29,6 @@ export class RegisterComponent implements OnInit{
       pwd2: this.model.cpassword
     };
 
-    console.log(JSON.stringify(registerData))
     this.userService.register(JSON.stringify(registerData));
   }
 }

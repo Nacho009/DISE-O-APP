@@ -30,7 +30,7 @@ public class UsersController {
 	private UsersService usersService;
 	
 	@PostMapping("/register") //con games y esto nuestra url sera: http:/-----/games/solicitarPartida
-	public String register(@RequestBody Map<String, Object> info) { //Request param es para que sea un parametro de la url
+	public ResponseEntity<Object> register(@RequestBody Map<String, Object> info) { //Request param es para que sea un parametro de la url
 		
 		String name = info.get("name").toString();
 		String email = info.get("email").toString();
@@ -42,11 +42,13 @@ public class UsersController {
 		
 		try {
 			this.usersService.register(name,email,pwd1);
+			return ResponseEntity.ok().body("{\"message\": \"Registro exitoso\"}");
+
 		}catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT);
 		}
 
-		return "SI";
+
 	}
 	
 	@PutMapping("/login")
