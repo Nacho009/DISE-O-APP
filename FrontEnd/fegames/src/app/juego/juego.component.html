@@ -1,0 +1,10 @@
+<div class="juego">
+    <table>
+      <tr *ngFor="let row of board.digits">
+        <td *ngFor="let cell of row">
+          <span class="cell" [ngClass]="{'filled': cell !== 0}">{{ cell || '' }}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  

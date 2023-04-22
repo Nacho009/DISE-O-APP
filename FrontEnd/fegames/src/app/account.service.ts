@@ -49,5 +49,9 @@ export class AccountService {
         }
       });
   }
+
+  prueba(): void {
+          this.router.navigate(['/prueba']);
+  }
   
 }

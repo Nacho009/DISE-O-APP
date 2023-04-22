@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { JuegoComponent } from './juego/juego.component';
 import { ResultadosComponent } from './resultados/resultados.component';
 import { AdministracionComponent } from './administracion/administracion.component';
+import { PruebaComponent } from './prueba/prueba.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AdministracionComponent } from './administracion/administracion.compone
     HomeComponent,
     JuegoComponent,
     ResultadosComponent,
-    AdministracionComponent
+    AdministracionComponent,
+    PruebaComponent
   ],
   imports: [
     BrowserModule,

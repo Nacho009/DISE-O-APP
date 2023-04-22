@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test</title>
+    <script>
+        function sendMessage(socket, type, data) {
+            const message = {
+                type: type,
+                ...data
+            };
+            socket.send(JSON.stringify(message));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var socket = new WebSocket('ws://localhost:80/wsGames');
+
+            socket.addEventListener('open', function() {
+                console.log('Conexión establecida');
+
+                // Prueba de mensajes
+                sendMessage(socket, 'MOVEMENT', { idMatch: 1, movement: 'up' });
+                sendMessage(socket, 'CHAT', { target: 'user2', message: 'Hola, ¿cómo estás?' });
+                sendMessage(socket, 'BROADCAST', { message: '¡Hola a todos!' });
+            });
+
+            socket.addEventListener('message', function(event) {
+                console.log('Mensaje del servidor:', event.data);
+            });
+
+            socket.addEventListener('close', function() {
+                console.log('Conexión cerrada');
+            });
+
+            socket.addEventListener('error', function(event) {
+                console.error('Error en la conexión WebSocket:', event);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>WebSocket Test</h1>
+</body>
+</html>

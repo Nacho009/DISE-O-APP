@@ -3,6 +3,7 @@ package edu.uclm.esi.ds.games.http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,7 @@ import edu.uclm.esi.ds.games.domain.Match;
 import edu.uclm.esi.ds.games.services.GamesService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("games")
 public class GamesController {
 	

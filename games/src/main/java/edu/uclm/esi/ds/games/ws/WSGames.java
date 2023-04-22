@@ -63,11 +63,28 @@ public class WSGames extends TextWebSocketHandler {
 
 	private void chat(JSONObject jso) {
 		// TODO Auto-generated method stub
-		
+		String target = jso.getString("target");
+    	String message = jso.getString("message");
+
+    // Aquí puedes procesar el mensaje de chat en función de los valores de target y message
+
+    // Respuesta de ejemplo al cliente
+    	for (WebSocketSession session : this.sessions) {
+        	this.send(session, "type", "CHAT_RESULT", "message", "Mensaje enviado a " + target + ": " + message);
+    	}
 	}
 
 	private void move(JSONObject jso) {
 		// TODO Auto-generated method stub
+		int idMatch = jso.getInt("idMatch");
+    	String movement = jso.getString("movement");
+
+    // Aquí puedes procesar el movimiento en función de los valores de idMatch y movement
+
+    // Respuesta de ejemplo al cliente
+    	for (WebSocketSession session : this.sessions) {
+        	this.send(session, "type", "MOVEMENT_RESULT", "message", "Movimiento procesado: " + movement);
+    	}
 
 	}
 	
