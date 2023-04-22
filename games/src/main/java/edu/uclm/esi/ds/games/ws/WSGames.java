@@ -2,6 +2,7 @@ package edu.uclm.esi.ds.games.ws;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -67,8 +68,9 @@ public class WSGames extends TextWebSocketHandler {
 
 	private void move(JSONObject jso) {
 		// TODO Auto-generated method stub
-		
+
 	}
+	
 
 	private void broadcast(JSONObject jso) {
 		
