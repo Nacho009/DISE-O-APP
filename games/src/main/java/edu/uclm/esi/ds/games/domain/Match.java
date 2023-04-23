@@ -31,7 +31,7 @@ public class Match {
 	}
 	
 	
-	private void buildBoards() {
+	void buildBoards() {
 		Board board = new Board();
 		this.boards.put(this.players.get(0), board);
 		this.boards.put(this.players.get(1), board.copy());
@@ -42,8 +42,12 @@ public class Match {
 		
 		this.players.add(player);
 		
-		if (this.players.size()==2)
+		if (this.players.size()==2){
 			this.ready=true;
+			buildBoards();
+			
+		}
+
 	}
 	
 	public List<String> getPlayers(){
