@@ -1,8 +1,8 @@
 package edu.uclm.esi.ds.games.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -12,15 +12,15 @@ import jakarta.persistence.Table;
 public class Move {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Long gameId;
-
+    @Column(nullable = false)
     private Long playerId;
-
-    private int row;
-    
+    @Column(nullable = false)
+    private int row1;
+    @Column(nullable = false)
     private int col;
 
     public Long getId() {
@@ -48,11 +48,11 @@ public class Move {
     }
 
     public int getRow() {
-        return row;
+        return row1;
     }
 
     public void setRow(int row) {
-        this.row = row;
+        this.row1 = row;
     }
 
     public int getCol() {
