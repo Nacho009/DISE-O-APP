@@ -10,7 +10,6 @@ export class JuegoComponent implements OnInit{
   board: any; 
 
   constructor() {
-    // EL BOARD TENGO QUE PASARLO DESDE EL BACKEND...PERO SE VE PARA SEGUIR TRABAJANDO
     this.board = {
       digits: [
         [1, 2, 3, 4, 5, 6, 7, 8, 1],
@@ -27,4 +26,15 @@ export class JuegoComponent implements OnInit{
   }
 
   ngOnInit(): void {}
+
+  onCellClick(rowIndex: number, cellIndex: number): void {
+    console.log(`Celda seleccionada: Fila ${rowIndex}, columna ${cellIndex}`);
+    // LOGICO Y CONECTAR BACK
+  }
+
+  onAddDigitsClick(): void {
+    console.log('Agregar dígitos');
+    // CONECTAR BACK
+  }
+
 }

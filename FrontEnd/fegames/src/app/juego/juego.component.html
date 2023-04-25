@@ -1,10 +1,18 @@
-<div class="juego">
-    <table>
-      <tr *ngFor="let row of board.digits">
-        <td *ngFor="let cell of row">
-          <span class="cell" [ngClass]="{'filled': cell !== 0}">{{ cell || '' }}</span>
-        </td>
-      </tr>
-    </table>
+<div class="game-board">
+  <table>
+    <tr *ngFor="let row of board.digits; let rowIndex = index">
+      <td *ngFor="let cell of row; let cellIndex = index">
+        <button
+          class="cell"
+          [ngClass]="{'filled': cell !== 0}"
+          (click)="onCellClick(rowIndex, cellIndex)"
+        >
+          {{ cell || '' }}
+        </button>
+      </td>
+    </tr>
+  </table>
+  <div class="actions">
+    <button (click)="onAddDigitsClick()">Agregar dígitos</button>
   </div>
-  
+</div>
