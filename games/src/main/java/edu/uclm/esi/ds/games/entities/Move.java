@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity 
@@ -14,10 +16,10 @@ public class Move {
     @Id
     private Long id;
 
-    @Column(nullable = false)
-    private Long gameId;
-    @Column(nullable = false)
-    private Long playerId;
+    @ManyToOne
+    private Game game;
+    @OneToOne
+    private User player;
     @Column(nullable = false)
     private int row1;
     @Column(nullable = false)
@@ -31,20 +33,30 @@ public class Move {
         this.id = id;
     }
 
-    public Long getGameId() {
-        return gameId;
+   
+
+    public Game getGame() {
+        return game;
     }
 
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
-    public Long getPlayerId() {
-        return playerId;
+    public User getPlayer() {
+        return player;
     }
 
-    public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
+    public void setPlayer(User player) {
+        this.player = player;
+    }
+
+    public int getRow1() {
+        return row1;
+    }
+
+    public void setRow1(int row1) {
+        this.row1 = row1;
     }
 
     public int getRow() {

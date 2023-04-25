@@ -1,14 +1,17 @@
 package edu.uclm.esi.ds.games.entities;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity 
 @Table(
@@ -17,22 +20,17 @@ public class Game {
     @Id
     private Long id;
 
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name="id")
+    @OneToOne
     private User player1;
-
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name="id")
+    @OneToOne
     private User player2;
 
-    private ArrayList<Move> movements;
 
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name="id")
+    @OneToMany(mappedBy = "game")
+    private List<Move> movements;
+    @OneToOne
     private User winner;
-
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name="id")
+    @OneToOne
     private User loser;
 
     
@@ -75,7 +73,7 @@ public class Game {
         this.player2 = player2;
     }
 
-    public ArrayList<Move> getMovements() {
+    public List<Move> getMovements() {
         return movements;
     }
 

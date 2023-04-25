@@ -18,8 +18,5 @@ public class LanzadoraGames
         
     }
 
-    @Bean
-    public LoadTimeWeaver loadTimeWeaver() {
-        return new InstrumentationLoadTimeWeaver();
-    }
+
 }
