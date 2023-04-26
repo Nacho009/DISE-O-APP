@@ -1,4 +1,5 @@
 import { Component, OnInit  } from '@angular/core';
+import { GamesService } from '../games.service';
 
 @Component({
   selector: 'app-juego',
@@ -9,27 +10,17 @@ export class JuegoComponent implements OnInit{
 
   board: any; 
 
+
+
   constructor() {
-    this.board = {
-      digits: [
-        [1, 2, 3, 4, 5, 6, 7, 8, 1],
-        [2, 3, 4, 5, 6, 7, 8, 9, 1],
-        [3, 4, 5, 6, 7, 8, 9, 1, 2],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-      ]
-    };
+
   }
 
   ngOnInit(): void {}
 
   onCellClick(rowIndex: number, cellIndex: number): void {
     console.log(`Celda seleccionada: Fila ${rowIndex}, columna ${cellIndex}`);
-    // LOGICO Y CONECTAR BACK
+    // LOGICA Y CONECTAR BACK
   }
 
   onAddDigitsClick(): void {

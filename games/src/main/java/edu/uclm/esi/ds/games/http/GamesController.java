@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import edu.uclm.esi.ds.games.domain.Board;
 import edu.uclm.esi.ds.games.domain.Match;
 import edu.uclm.esi.ds.games.services.GamesService;
 
@@ -30,6 +31,11 @@ public class GamesController {
 		
 		return this.gamesService.requestGame(juego, player);
 		
+	}
+
+	@GetMapping("/requestBoard") 
+	public byte[][] requestBoard() { 
+		return this.gamesService.requestBoard().getDigits();
 	}
 
 }

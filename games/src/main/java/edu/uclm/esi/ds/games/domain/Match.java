@@ -27,15 +27,16 @@ public class Match {
 
 	public void setReady(boolean ready) {
 		this.ready = ready;
-		this.buildBoards();
 	}
 	
 	
-	void buildBoards() {
+	Board buildBoards() {
+
 		Board board = new Board();
 		this.boards.put(this.players.get(0), board);
 		this.boards.put(this.players.get(1), board.copy());
 		
+		return board;
 	}
 
 	public void addPlayer(String player) {
