@@ -7,12 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GamesService {
-  httpOptions: { headers: any; };
-  board!: JuegoComponent;
+  private httpOptions;
 
   constructor(private httpClient : HttpClient) { 
 
-    
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -21,8 +19,9 @@ export class GamesService {
 
   }
 
-  requestGame(){
-
+  requestGame(juego: any, player: any){
+    return this.httpClient.get("http://localhost:80/games/requestGame?juego="+juego+"&player="+player+"")
+    
   }
 
   getByteArray(): Observable<number[][]> {

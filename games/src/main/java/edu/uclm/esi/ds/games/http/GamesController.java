@@ -24,8 +24,8 @@ public class GamesController {
 	@Autowired
 	private GamesService gamesService;
 	
-	@GetMapping("/requestGame") //con games y esto nuestra url sera: http:/-----/games/solicitarPartida
-	public Match requestGame(@RequestParam String juego, @RequestParam String player) { //Request param es para que sea un parametro de la url
+	@GetMapping("/requestGame") 
+	public Match requestGame(@RequestParam String juego, @RequestParam String player) { 
 		
 		if (!juego.equals("nm"))
 			

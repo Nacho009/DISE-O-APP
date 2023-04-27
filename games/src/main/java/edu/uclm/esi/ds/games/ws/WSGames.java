@@ -89,22 +89,22 @@ public class WSGames extends TextWebSocketHandler {
 
 	private void broadcast(JSONObject jso) {
 		
-		TextMessage message = new TextMessage(jso.getString("message")); //Para extraer el mensaje que me llega
+		TextMessage message = new TextMessage(jso.getString("message")); 
 		
 		for (WebSocketSession client: this.sessions) {
-			Runnable r  = new Runnable() { //lo hacemos asi para hacer hilos para los msjs
+			Runnable r  = new Runnable() { 
 				@Override
 				public void run() {
 					try {
 						client.sendMessage(message);
 					} catch (IOException e) {
-						WSGames.this.sessions.remove(client); //pq aqui el this dentro de esto es el runnable
+						WSGames.this.sessions.remove(client); 
 					}
 				}
 			
 			};
 			
-			new Thread(r).start(); //esto lo hacemos para lanzar el hilo
+			new Thread(r).start(); 
 		}
 	}
 

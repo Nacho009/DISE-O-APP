@@ -23,15 +23,16 @@ export class AccountService {
 
    register(info: any) {
     this.httpClient.post("http://localhost:80/users/register", info, this.httpOptions)
-    .subscribe(
-      respuesta => {
-        alert(respuesta);    
-        console.log(respuesta);
+    .subscribe({
+      next: (response: any) => {
+        console.log('Estado HTTP:', response.status);
+        this.router.navigate(['/login']);
       },
-      error => {
-        console.error(error);
+      error: (error: any) => {
+        console.error('Error en la solicitud:', error);
+        alert('Registro incorrecto');
       }
-    );
+    });
   }
   
 
@@ -50,8 +51,6 @@ export class AccountService {
       });
   }
 
-  prueba(): void {
-          this.router.navigate(['/prueba']);
-  }
+
   
 }

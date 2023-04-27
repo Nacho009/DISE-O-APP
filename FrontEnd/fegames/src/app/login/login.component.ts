@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from '../account.service';
+import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
  
 
   constructor(
-    private router: Router, private userService: AccountService
+    private router: Router, private userService: AccountService, private sharedDataService: SharedDataService
+
    
   ) {}
 
@@ -29,6 +31,7 @@ export class LoginComponent implements OnInit {
     };
 
     this.userService.login(JSON.stringify(loginData));
-    
+    this.sharedDataService.username = this.model.username;
+
 }
 }

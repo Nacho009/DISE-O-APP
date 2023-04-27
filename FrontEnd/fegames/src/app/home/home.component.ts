@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountService } from '../account.service';
+import { GamesService } from '../games.service';
+import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-home',
@@ -10,12 +11,14 @@ import { AccountService } from '../account.service';
 export class HomeComponent {
 
   constructor(
-    private router: Router, private userService: AccountService
+    private router: Router, private gameService: GamesService, public sharedDataService: SharedDataService
    
   ) {}
   
-  prueba() {
-    this.router.navigate(['/prueba']);
-    
-}
+
+  requestGame(juego: any){
+
+    console.log(this.gameService.requestGame(juego, this.sharedDataService.username
+      ));
+  }
 }

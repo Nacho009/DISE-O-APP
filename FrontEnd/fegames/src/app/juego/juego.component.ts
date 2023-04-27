@@ -8,7 +8,9 @@ import { GamesService } from '../games.service';
 })
 export class JuegoComponent implements OnInit{
 
-  byteArray: number[][] = [];
+  byteArrayP1: number[][] = [];
+  byteArrayP2: number[][] = [];
+
   board: any; 
 
   constructor(private gameService: GamesService) {
@@ -18,11 +20,22 @@ export class JuegoComponent implements OnInit{
   ngOnInit(): void {
 
     this.gameService.getByteArray().subscribe(integerList => {
-      this.byteArray = integerList;
+      this.byteArrayP1 = integerList;
+      this.byteArrayP2=integerList;
     });
 
   }
 
+  // copyMatrix(matrix: number[][]): number[][] {
+  //   const copiedMatrix: number[][] = [];
+
+  //   for (const row of matrix) {
+  //     copiedMatrix.push([...row]);
+  //   }
+
+  //   return copiedMatrix;
+  // }
+  
   onCellClick(rowIndex: number, cellIndex: number): void {
     console.log(`Celda seleccionada: Fila ${rowIndex}, columna ${cellIndex}`);
     // LOGICA Y CONECTAR BACK

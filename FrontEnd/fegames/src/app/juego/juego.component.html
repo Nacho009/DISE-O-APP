@@ -1,6 +1,19 @@
 <div class="game-board">
   <table>
-    <tr *ngFor="let row of byteArray; let rowIndex = index">
+    <tr *ngFor="let row of byteArrayP1; let rowIndex = index">
+      <td *ngFor="let cell of row; let cellIndex = index">
+        <button
+          class="cell"
+          [ngClass]="{'filled': cell !== 0}"
+          (click)="onCellClick(rowIndex, cellIndex)"
+        >
+          {{ cell || '' }}
+        </button>
+      </td>
+    </tr>
+  </table>
+  <table>
+    <tr *ngFor="let row of byteArrayP2; let rowIndex = index">
       <td *ngFor="let cell of row; let cellIndex = index">
         <button
           class="cell"
