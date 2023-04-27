@@ -8,15 +8,20 @@ import { GamesService } from '../games.service';
 })
 export class JuegoComponent implements OnInit{
 
+  byteArray: number[][] = [];
   board: any; 
 
-
-
-  constructor() {
+  constructor(private gameService: GamesService) {
 
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    this.gameService.getByteArray().subscribe(integerList => {
+      this.byteArray = integerList;
+    });
+
+  }
 
   onCellClick(rowIndex: number, cellIndex: number): void {
     console.log(`Celda seleccionada: Fila ${rowIndex}, columna ${cellIndex}`);

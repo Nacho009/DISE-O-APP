@@ -1,5 +1,7 @@
 package edu.uclm.esi.ds.games.http;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -34,8 +36,8 @@ public class GamesController {
 	}
 
 	@GetMapping("/requestBoard") 
-	public byte[][] requestBoard() { 
-		return this.gamesService.requestBoard().getDigits();
+	public List<List<Integer>> requestBoard() { 
+		return this.gamesService.requestBoard();
 	}
 
 }

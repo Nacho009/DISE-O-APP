@@ -3,8 +3,8 @@ package edu.uclm.esi.ds.games.services;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Service;
-
-import edu.uclm.esi.ds.games.domain.Board;
+import java.util.ArrayList;
+import java.util.List;
 import edu.uclm.esi.ds.games.domain.Match;
 import edu.uclm.esi.ds.games.domain.WaitingRoom;
 
@@ -32,10 +32,20 @@ public class GamesService {
 		return match;
 	}
 
-	public Board requestBoard(){
-		
-		return this.matches.get("nm").getBoards().get(0);
+	public List<List<Integer>> requestBoard(){
+		return convertToIntegerList(this.matches.get("nm").getBoards().get(0).getDigits());
+	}
 
+	public List<List<Integer>> convertToIntegerList(byte[][] byteArray) {
+		List<List<Integer>> integerList = new ArrayList<>();
+		for (byte[] row : byteArray) {
+			List<Integer> rowList = new ArrayList<>();
+			for (byte b : row) {
+				rowList.add((int) b & 0xFF);
+			}
+			integerList.add(rowList);
+		}
+		return integerList;
 	}
 
 }
