@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JuegoComponent } from './juego/juego.component';
 import { Observable } from 'rxjs';
-
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,8 +20,10 @@ export class GamesService {
 
   }
 
-  requestGame(juego: any, player: any){
-    return this.httpClient.get("http://localhost:80/games/requestGame?juego="+juego+"&player="+player+"")
+  requestGame(juego: String, player: String): Observable<String> {
+    const url = `http://localhost:80/games/requestGame?juego=${juego}&player=${player}`;
+    console.log(url)
+    return this.httpClient.get<String>(url)
     
   }
 

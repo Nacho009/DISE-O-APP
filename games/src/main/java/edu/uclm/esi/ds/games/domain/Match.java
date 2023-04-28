@@ -61,4 +61,11 @@ public class Match {
 		return boards.values().stream().toList();
 	}
 
+	@Override
+	public String toString() {
+		return "Match [id=" + id + ", ready=" + ready + ", players=" + players + ", boards=" + boards + "]";
+	}
+
+	
+
 }

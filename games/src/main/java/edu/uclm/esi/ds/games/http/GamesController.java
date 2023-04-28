@@ -27,6 +27,7 @@ public class GamesController {
 	@GetMapping("/requestGame") 
 	public Match requestGame(@RequestParam String juego, @RequestParam String player) { 
 		
+		System.out.println(juego+"   ssssssssssssssssssssssasasasasasasasasasas    "+player);
 		if (!juego.equals("nm"))
 			
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encuentra ese juego");

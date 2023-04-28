@@ -16,9 +16,16 @@ export class HomeComponent {
   ) {}
   
 
-  requestGame(juego: any){
+  requestGame(juego: String){
 
-    console.log(this.gameService.requestGame(juego, this.sharedDataService.username
-      ));
+    this.gameService.requestGame('nm', this.sharedDataService.username).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      },
+      error: (error: any) => {
+        console.error('Error en la solicitud:', error);
+      }
+    });
+  
   }
 }
