@@ -17,7 +17,7 @@ import edu.uclm.esi.ds.games.domain.Match;
 import edu.uclm.esi.ds.games.services.GamesService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins =  {"http://localhost:4200", "http://localhost:60225"})
 @RequestMapping("games")
 public class GamesController {
 	
@@ -27,7 +27,6 @@ public class GamesController {
 	@GetMapping("/requestGame") 
 	public Match requestGame(@RequestParam String juego, @RequestParam String player) { 
 		
-		System.out.println(juego+"   ssssssssssssssssssssssasasasasasasasasasas    "+player);
 		if (!juego.equals("nm"))
 			
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encuentra ese juego");

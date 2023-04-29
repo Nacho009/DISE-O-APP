@@ -22,7 +22,7 @@ import edu.uclm.esi.ds.games.services.GamesService;
 import edu.uclm.esi.ds.games.services.UsersService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins =  {"http://localhost:4200", "http://localhost:60225"})
 @RequestMapping("users")
 public class UsersController {
 	

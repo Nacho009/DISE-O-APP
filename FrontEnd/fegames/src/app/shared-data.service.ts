@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class SharedDataService {
   username: String;
+  match: String[] =[];
+
 
   constructor() {
     this.username = '';
