@@ -24,9 +24,8 @@ export class GamesService {
   requestGame(juego: String, player: String): Observable<String> {
     const url = `http://localhost:80/games/requestGame?juego=${juego}&player=${player}`;
     console.log(url)
-    this.sharedDataService.match.push(player);
+    this.sharedDataService.match.push(player)
     return this.httpClient.get<String>(url)
-    
   }
 
   getByteArray(): Observable<number[][]> {

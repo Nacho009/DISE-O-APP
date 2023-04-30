@@ -5,78 +5,76 @@ import { SharedDataService } from '../shared-data.service';
 import { ToastrService } from 'ngx-toastr';
 import { WebSocketService } from '../websocket.service';
 import { Subject } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent{
+export class HomeComponent implements OnInit, OnDestroy{
 
-  private socket$!: Subject<any>;
-
+  jugadores!: number;
   constructor(
     private router: Router, private gameService: GamesService, private sharedDataService: SharedDataService, 
     private toastr: ToastrService, private websocketService: WebSocketService
    
   ) {
-    const url = 'ws://localhost:80/wsGames';
-    this.socket$ = this.websocketService.connect(url);
+    this.jugadores=0;
+  }
+  
+  ngOnInit() {
+    this.websocketService.socket$.subscribe((messageEvent: MessageEvent) => {
+      console.log('WebSocket message received:', messageEvent);
 
-    this.socket$.subscribe({
-      next: (response: any) => {
-        console.log("WebSocket con", response);
-      },
-      error: (error: any) => {
-        console.error('WebSocket error:', error);
+      const messageData = JSON.parse(messageEvent.data);
 
+      switch (messageData.type) {
+        case 'MOVEMENT':
+
+        break;
+        case 'CHAT':
+
+        break;
+        case 'BROADCAST':
+          console.log(messageData.data)
+          break;
+        default:
+          console.warn('Unrecognized message type:', messageData.type);
       }
     });
   }
-  
-  // ngOnInit() {
-  //   const url = 'ws://localhost:80/wsGames';
-  //   this.socket$ = this.websocketService.connect(url);
-
-  //   this.socket$.subscribe({
-  //     next: (response: any) => {
-  //       console.log("WebSocket con", response);
-  //     },
-  //     error: (error: any) => {
-  //       console.error('WebSocket error:', error);
-
-  //     }
-  //   });
-  // }
   ngOnDestroy() {
     this.websocketService.disconnect();
   }
 
-  requestGame(juego: String){
+  comprobar(jugadores: number){
 
-    if(!this.sharedDataService.match.includes(this.sharedDataService.username)){
+    if(this.jugadores==2){
+      this.router.navigate(['/juego']);
+    }
 
-      this.gameService.requestGame('nm', this.sharedDataService.username).subscribe({
-        next: (response: any) => {
-          console.log(response);
-          this.toastr.success('Juego solicitado correctamente', 'Éxito');
+  }
 
-          this.websocketService.sendBroadcast("HOLALLALAL");
-        },
-        error: (error: any) => {
-          console.error('Error en la solicitud:', error);
-          this.toastr.error('No se pudo solicitar el juego', 'Error');
-
+  async requestGame(juego: String) {
+    if (!this.sharedDataService.match.includes(this.sharedDataService.username)) {
+      try {
+        const response: any = await firstValueFrom(
+          this.gameService.requestGame('nm', this.sharedDataService.username)
+        );
+        console.log(response);
+        this.toastr.success('Juego solicitado correctamente', 'Éxito');
+        this.jugadores=response.players.length;
+        if (this.jugadores == 2) {
+          await this.websocketService.sendBroadcast('LA PARTIDA EMPIEZA YA');
         }
-      });
-
-    }else{
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+        this.toastr.error('No se pudo solicitar el juego', 'Error');
+      }
+    } else {
       this.toastr.warning('Ya estás dentro del juego', 'Advertencia');
     }
-    
-  
   }
-  
-
-  
 }
+

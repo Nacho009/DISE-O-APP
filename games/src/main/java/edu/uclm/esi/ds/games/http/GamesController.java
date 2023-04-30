@@ -17,7 +17,7 @@ import edu.uclm.esi.ds.games.domain.Match;
 import edu.uclm.esi.ds.games.services.GamesService;
 
 @RestController
-@CrossOrigin(origins =  {"http://localhost:4200", "http://localhost:60225"})
+@CrossOrigin(origins =  {"*"})
 @RequestMapping("games")
 public class GamesController {
 	

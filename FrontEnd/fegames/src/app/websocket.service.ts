@@ -6,14 +6,17 @@ import { Observable, Subject } from 'rxjs';
 })
 export class WebSocketService {
   private socket!: WebSocket;
-  private socket$!: Subject<any>;
+  public socket$: Subject<any>;
+  private url = "ws://localhost:80/wsGames";
 
-  constructor() {}
+  constructor() {
+    this.socket$ = new Subject<any>();
+  }
 
-  public connect(url: string): Subject<any> {
+  public connect(url: string): Observable<Event> {
     this.socket = new WebSocket(url);
 
-    const observable = new Observable<MessageEvent>((observer) => {
+    const observable = new Observable<Event>((observer) => {
       this.socket.onmessage = (event) => observer.next(event);
       this.socket.onerror = (event) => observer.error(event);
       this.socket.onclose = (event) => observer.complete();
@@ -23,23 +26,23 @@ export class WebSocketService {
       };
     });
 
-    const socketSubject = new Subject<MessageEvent>();
-    const socketDataSubject = new Subject<any>();
-
-    const observer = {
-      next: (data: Object) => {
-        if (this.socket.readyState === WebSocket.OPEN) {
-          this.socket.send(JSON.stringify(data));
-        }
-      },
-    };
-
-    socketSubject.subscribe(observer);
-    observable.subscribe((messageEvent) => {
-      socketDataSubject.next(JSON.parse(messageEvent.data));
+    const openObservable = new Observable<Event>((observer) => {
+      this.socket.onopen = (event) => {
+        observer.next(event);
+        observer.complete();
+      };
     });
 
-    return socketDataSubject;
+    openObservable.subscribe(() => {
+      console.log('WebSocket connection established');
+    });
+
+    observable.subscribe((messageEvent) => {
+      this.socket$.next(messageEvent);
+    });
+    
+
+    return openObservable;
   }
 
   public disconnect() {
@@ -49,34 +52,38 @@ export class WebSocketService {
   }
 
   sendMovement(idMatch: number, movement: string) {
-    const message = {
-      type: 'MOVEMENT',
-      idMatch: idMatch,
-      movement: movement,
-    };
-    this.socket$.next(message);
+    this.connect(this.url).subscribe(() => {
+      const message = {
+        type: 'MOVEMENT',
+        idMatch: idMatch,
+        movement: movement,
+      };
+      this.socket.send(JSON.stringify(message));
+    });
   }
 
   sendChat(target: string, message: string) {
-    const chatMessage = {
-      type: 'CHAT',
-      target: target,
-      message: message,
-    };
-    this.socket$.next(chatMessage);
+    this.connect(this.url).subscribe(() => {
+      const chatMessage = {
+        type: 'CHAT',
+        target: target,
+        message: message,
+      };
+      this.socket.send(JSON.stringify(chatMessage));
+    });
   }
 
-  sendBroadcast(message: String) {
-    const broadcastMessage = {
-      type: "BROADCAST",
-      message: message,
-    };
-    console.log("11111111")
-    console.log(JSON.stringify(broadcastMessage))
-    console.log(broadcastMessage)
-
-
-    this.socket$.next(JSON.stringify(broadcastMessage));
+  sendBroadcast(message: String): Promise<void> {
+    return new Promise((resolve) => {
+      this.connect(this.url).subscribe(() => {
+        const broadcastMessage = {
+          type: 'BROADCAST',
+          message: message,
+        };
+        console.log(JSON.stringify(broadcastMessage));
+        this.socket.send(JSON.stringify(broadcastMessage));
+        resolve();
+      });
+    });
   }
-  
 }

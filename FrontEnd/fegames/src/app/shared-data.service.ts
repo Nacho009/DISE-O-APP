@@ -10,5 +10,6 @@ export class SharedDataService {
 
   constructor() {
     this.username = '';
+    this.match = [];
   }
 }
