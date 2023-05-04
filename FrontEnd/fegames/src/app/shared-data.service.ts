@@ -6,10 +6,11 @@ import { Injectable } from '@angular/core';
 export class SharedDataService {
   username: String;
   match: String[] =[];
-
+  type: any;
 
   constructor() {
     this.username = '';
     this.match = [];
+    this.type = '';
   }
 }

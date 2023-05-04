@@ -80,7 +80,6 @@ export class WebSocketService {
           type: 'BROADCAST',
           message: message,
         };
-        console.log(JSON.stringify(broadcastMessage));
         this.socket.send(JSON.stringify(broadcastMessage));
         resolve();
       });

@@ -92,7 +92,6 @@ public class WSGames extends TextWebSocketHandler {
 
 	private void broadcast(JSONObject jso) {
 		
-
 		TextMessage message = new TextMessage(jso.getString("message")); 
 		
 		System.out.println(jso);

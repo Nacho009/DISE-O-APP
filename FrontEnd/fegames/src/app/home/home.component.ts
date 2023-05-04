@@ -25,11 +25,13 @@ export class HomeComponent implements OnInit, OnDestroy{
   
   ngOnInit() {
     this.websocketService.socket$.subscribe((messageEvent: MessageEvent) => {
-      console.log('WebSocket message received:', messageEvent);
+      console.log('WebSocket message received:', messageEvent.data);
 
       const messageData = JSON.parse(messageEvent.data);
-
-      switch (messageData.type) {
+      if (messageData.hasOwnProperty('ready') && messageData.ready === true) {
+        this.sharedDataService.type = 'BROADCAST';
+      }
+      switch (this.sharedDataService.type) {
         case 'MOVEMENT':
 
         break;
@@ -37,7 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy{
 
         break;
         case 'BROADCAST':
-          console.log(messageData.data)
+          console.log("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
           break;
         default:
           console.warn('Unrecognized message type:', messageData.type);
@@ -66,7 +68,8 @@ export class HomeComponent implements OnInit, OnDestroy{
         this.toastr.success('Juego solicitado correctamente', 'Éxito');
         this.jugadores=response.players.length;
         if (this.jugadores == 2) {
-          await this.websocketService.sendBroadcast('LA PARTIDA EMPIEZA YA');
+          console.log(JSON.stringify(response));
+          await this.websocketService.sendBroadcast(JSON.stringify(response));
         }
       } catch (error) {
         console.error('Error en la solicitud:', error);
