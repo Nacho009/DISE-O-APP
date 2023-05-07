@@ -2,9 +2,11 @@ package edu.uclm.esi.ds.games.ws;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.socket.BinaryMessage;
@@ -13,11 +15,26 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import edu.uclm.esi.ds.games.entities.Game;
+import edu.uclm.esi.ds.games.entities.Move;
+import edu.uclm.esi.ds.games.entities.User;
+import edu.uclm.esi.ds.games.services.GamesService;
+import edu.uclm.esi.ds.games.services.MoveService;
+import edu.uclm.esi.ds.games.services.UsersService;
+
 @Component
-@CrossOrigin(origins =  {"*"})
 public class WSGames extends TextWebSocketHandler {
 	private ArrayList<WebSocketSession> sessions = new ArrayList<>();
-	
+
+	private  static GamesService gameService;
+
+	@Autowired
+	private UsersService userService;
+
+	@Autowired
+	private MoveService moveService;
+
+
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		this.sessions.add(session);
@@ -76,14 +93,25 @@ public class WSGames extends TextWebSocketHandler {
 	}
 
 	private void move(JSONObject jso) {
-		// TODO Auto-generated method stub
-		int idMatch = jso.getInt("idMatch");
-    	String movement = jso.getString("movement");
+
+		String idMatch = jso.getString("idMatch");
+		int col1 = jso.getJSONObject("move").getInt("col1");
+		int row1 = jso.getJSONObject("move").getInt("row1");
+		int col2 = jso.getJSONObject("move").getInt("col2");
+		int row2 = jso.getJSONObject("move").getInt("row2");
+		Long idMove = jso.getJSONObject("move").getLong("id");
+		String userName = jso.getJSONObject("move").getString("user");
+
+		Game game = gameService.findGame(idMatch);
+		User user = userService.findUser(userName);
+
+		Move move= new Move(idMove, game, user, row1, col1, row2, col2);
+
+		moveService.guardar(move);
 
 
-    // PRUEBA FUNCIONAMIENTO
     	for (WebSocketSession session : this.sessions) {
-        	this.send(session, "type", "MOVEMENT_RESULT", "message", "Movimiento procesado: " + movement);
+        	this.send(session, "type", "MOVEMENT_RESULT", "message", "Movimiento procesado: " + move);
     	}
 
 	}
@@ -92,7 +120,6 @@ public class WSGames extends TextWebSocketHandler {
 	private void broadcast(JSONObject jso) {
 		
 		TextMessage message = new TextMessage(jso.getString("message")); 
-		System.out.println(jso);
 
 		for (WebSocketSession client: this.sessions) {
 			Runnable r  = new Runnable() { 
@@ -111,6 +138,11 @@ public class WSGames extends TextWebSocketHandler {
 		}
 	}
 
+	@Autowired
+	public void setGamesService(GamesService gameService) {
+		WSGames.gameService = gameService;
+	}
+
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
 	}
@@ -122,11 +154,11 @@ public class WSGames extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		this.sessions.remove(session);
 		
-		JSONObject jso = new JSONObject();
-		jso.put("type", "BYE");
-		jso.put("message", "Un usuario se ha ido");
+		// JSONObject jso = new JSONObject();
+		// jso.put("type", "BYE");
+		// jso.put("message", "Un usuario se ha ido");
 	
-		this.broadcast(jso);
+		// this.broadcast(jso);
 	}
 	
 }

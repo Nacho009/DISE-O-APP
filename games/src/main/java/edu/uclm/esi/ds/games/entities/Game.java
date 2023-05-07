@@ -18,7 +18,7 @@ import jakarta.persistence.Transient;
 		name = "games")
 public class Game {
     @Id
-    private Long id;
+    private String id;
 
     @OneToOne
     private User player1;
@@ -37,23 +37,24 @@ public class Game {
 
     // Getters y setters
 
-    // public Game(Long id, User player1, User player2, ArrayList<Move> movements, User winner, User loser) {
+    public Game(String id, User player1, User player2) {
 
-    //     this.player1 = player1;
-    //     this.player2 = player2;
-    //     this.movements = movements;
-    //     this.winner = winner;
-    //     this.loser = loser;
-    // }
+        this.id=id;
+        this.player1 = player1;
+        this.player2 = player2;
+        this.movements = new ArrayList<Move>();
+        this.winner = null;
+        this.loser = null;
+    }
 
-    // public Game(){
-    // }
+    public Game(){
+    }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

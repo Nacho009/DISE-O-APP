@@ -23,7 +23,25 @@ public class Move {
     @Column(nullable = false)
     private int row1;
     @Column(nullable = false)
-    private int col;
+    private int col1;
+    @Column(nullable = false)
+    private int row2;
+    @Column(nullable = false)
+    private int col2;
+
+    
+    public Move(Long id, Game game, User player, int row1, int col1,int row2, int col2) {
+        this.id = id;
+        this.game = game;
+        this.player = player;
+        this.row1 = row1;
+        this.col1 = col1;
+        this.row2 = row2;
+        this.col2 = col2;
+    }
+    public Move(){
+
+    }
 
     public Long getId() {
         return id;
@@ -67,12 +85,24 @@ public class Move {
         this.row1 = row;
     }
 
-    public int getCol() {
-        return col;
+    public int getCol1() {
+        return col1;
     }
 
-    public void setCol(int col) {
-        this.col = col;
+    public void setCol1(int col1) {
+        this.col1 = col1;
+    }
+    public int getRow2() {
+        return row2;
+    }
+    public void setRow2(int row2) {
+        this.row2 = row2;
+    }
+    public int getCol2() {
+        return col2;
+    }
+    public void setCol2(int col2) {
+        this.col2 = col2;
     }
 
     

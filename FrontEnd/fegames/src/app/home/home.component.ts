@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
       const messageData = JSON.parse(messageEvent.data);
       if (messageData.hasOwnProperty('ready') && messageData.ready === true) {
+        this.sharedDataService.id= messageData.id;
         this.router.navigate(['/juego']);
       }
     });

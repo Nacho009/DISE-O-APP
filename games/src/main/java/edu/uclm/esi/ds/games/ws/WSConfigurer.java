@@ -8,7 +8,6 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
 @Configuration
-@CrossOrigin(origins =  {"*"})
 @EnableWebSocket
 public class WSConfigurer implements WebSocketConfigurer {
 	@Override

@@ -16,3 +16,18 @@
     <button (click)="onAddDigitsClick()">Agregar dígitos</button>
   </div>
 </div>
+
+<!-- Añadir sección de chat -->
+<div class="chat">
+  <div class="chat-messages">
+    <ul>
+      <li *ngFor="let message of chatMessages">
+        <span class="message-author">{{ message.author }}</span>: {{ message.text }}
+      </li>
+    </ul>
+  </div>
+  <div class="chat-input">
+    <input [(ngModel)]="newMessage" placeholder="Escribe un mensaje" />
+    <button (click)="onSendMessageClick()">Enviar</button>
+  </div>
+</div>

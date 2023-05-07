@@ -8,7 +8,7 @@ public class Match {
 	private boolean ready;
 	private List<String> players;
 	private HashMap<String, Board> boards;
-	
+
 	public Match(){
 		
 		this.id = UUID.randomUUID().toString();

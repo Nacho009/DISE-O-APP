@@ -3,12 +3,11 @@ package edu.uclm.esi.ds.games;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.context.annotation.Bean;
-import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
-import org.springframework.instrument.classloading.LoadTimeWeaver;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ServletComponentScan
+@ComponentScan(basePackages = "edu.uclm.esi.ds.games")
 public class LanzadoraGames 
 {
 	

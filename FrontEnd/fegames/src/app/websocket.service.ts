@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { Move } from './Clases/Move';
 
 @Injectable({
   providedIn: 'root',
@@ -51,12 +52,12 @@ export class WebSocketService {
     }
   }
 
-  sendMovement(idMatch: number, movement: string) {
+  sendMovement(idMatch: String, move: Move) {
     this.connect(this.url).subscribe(() => {
       const message = {
         type: 'MOVEMENT',
         idMatch: idMatch,
-        movement: movement,
+        move: move,
       };
       this.socket.send(JSON.stringify(message));
     });

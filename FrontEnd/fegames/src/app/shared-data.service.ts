@@ -7,6 +7,7 @@ export class SharedDataService {
   username: String;
   match: String[] =[];
   type: any;
+  id: String;
 
   
 
@@ -14,5 +15,6 @@ export class SharedDataService {
     this.username = '';
     this.match = [];
     this.type = '';
+    this.id='';
   }
 }
