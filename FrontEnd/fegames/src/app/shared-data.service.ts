@@ -8,6 +8,8 @@ export class SharedDataService {
   match: String[] =[];
   type: any;
 
+  
+
   constructor() {
     this.username = '';
     this.match = [];

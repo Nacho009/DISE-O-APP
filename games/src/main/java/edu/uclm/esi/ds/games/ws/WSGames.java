@@ -21,7 +21,6 @@ public class WSGames extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		this.sessions.add(session);
-		System.out.println(sessions.size());
 	}
 
 	@Override
@@ -93,7 +92,6 @@ public class WSGames extends TextWebSocketHandler {
 	private void broadcast(JSONObject jso) {
 		
 		TextMessage message = new TextMessage(jso.getString("message")); 
-		
 		System.out.println(jso);
 
 		for (WebSocketSession client: this.sessions) {

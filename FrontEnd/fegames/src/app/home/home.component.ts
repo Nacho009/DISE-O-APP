@@ -1,4 +1,4 @@
-import { Component,  OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { GamesService } from '../games.service';
 import { SharedDataService } from '../shared-data.service';
@@ -12,18 +12,23 @@ import { firstValueFrom } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy{
+export class HomeComponent implements OnInit, OnDestroy {
 
   jugadores!: number;
+  private websocketUrl = 'ws://localhost:80/wsGames';
+
   constructor(
-    private router: Router, private gameService: GamesService, private sharedDataService: SharedDataService, 
+    private router: Router, private gameService: GamesService, private sharedDataService: SharedDataService,
     private toastr: ToastrService, private websocketService: WebSocketService
-   
+
   ) {
-    this.jugadores=0;
+    this.jugadores = 0;
   }
-  
+
   ngOnInit() {
+    // Conectar al WebSocket
+    this.websocketService.connect(this.websocketUrl).subscribe();
+
     this.websocketService.socket$.subscribe((messageEvent: MessageEvent) => {
       console.log('WebSocket message received:', messageEvent.data);
 
@@ -34,10 +39,10 @@ export class HomeComponent implements OnInit, OnDestroy{
       switch (this.sharedDataService.type) {
         case 'MOVEMENT':
 
-        break;
+          break;
         case 'CHAT':
 
-        break;
+          break;
         case 'BROADCAST':
           console.log("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
           break;
@@ -50,9 +55,9 @@ export class HomeComponent implements OnInit, OnDestroy{
     this.websocketService.disconnect();
   }
 
-  comprobar(jugadores: number){
+  comprobar(jugadores: number) {
 
-    if(this.jugadores==2){
+    if (this.jugadores == 2) {
       this.router.navigate(['/juego']);
     }
 
@@ -66,7 +71,7 @@ export class HomeComponent implements OnInit, OnDestroy{
         );
         console.log(response);
         this.toastr.success('Juego solicitado correctamente', 'Éxito');
-        this.jugadores=response.players.length;
+        this.jugadores = response.players.length;
         if (this.jugadores == 2) {
           console.log(JSON.stringify(response));
           await this.websocketService.sendBroadcast(JSON.stringify(response));
@@ -80,4 +85,3 @@ export class HomeComponent implements OnInit, OnDestroy{
     }
   }
 }
-
