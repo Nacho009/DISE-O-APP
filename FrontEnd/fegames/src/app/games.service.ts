@@ -28,8 +28,8 @@ export class GamesService {
     return this.httpClient.get<String>(url)
   }
 
-  getByteArray(): Observable<number[][]> {
-    return this.httpClient.get<number[][]>("http://localhost:80/games/requestBoard");
+  getByteArray(player: String): Observable<number[][]> {
+    return this.httpClient.get<number[][]>(`http://localhost:80/games/requestBoard?player=${player}`);
   }
 
 }

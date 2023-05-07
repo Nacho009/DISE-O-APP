@@ -36,8 +36,8 @@ public class GamesController {
 	}
 
 	@GetMapping("/requestBoard") 
-	public List<List<Integer>> requestBoard() { 
-		return this.gamesService.requestBoard();
+	public List<List<Integer>> requestBoard(@RequestParam String player) { 
+		return this.gamesService.requestBoard(player);
 	}
 
 }

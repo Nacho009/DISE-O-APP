@@ -35,6 +35,7 @@ public class Match {
 		Board board = new Board();
 		this.boards.put(this.players.get(0), board);
 		this.boards.put(this.players.get(1), board.copy());
+
 		
 		return board;
 	}

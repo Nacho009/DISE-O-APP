@@ -1,5 +1,8 @@
 import { Component, OnInit  } from '@angular/core';
 import { GamesService } from '../games.service';
+import { SharedDataService } from '../shared-data.service';
+import { Router } from '@angular/router';
+import { WebSocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-juego',
@@ -8,20 +11,41 @@ import { GamesService } from '../games.service';
 })
 export class JuegoComponent implements OnInit{
 
-  byteArrayP1: number[][] = [];
-  byteArrayP2: number[][] = [];
+  byteArray: number[][] = [];
 
-  board: any; 
 
-  constructor(private gameService: GamesService) {
+  constructor(private websocketService: WebSocketService, private router: Router, private gameService: GamesService, private sharedDataService: SharedDataService) {
 
   }
 
   ngOnInit(): void {
 
-    this.gameService.getByteArray().subscribe(integerList => {
-      this.byteArrayP1 = integerList;
-      this.byteArrayP2=integerList;
+    this.gameService.getByteArray(this.sharedDataService.username).subscribe(integerList => {
+      this.byteArray = integerList;
+    });
+
+    this.websocketService.connect("ws://localhost:80/wsGames").subscribe();
+
+    this.websocketService.socket$.subscribe((messageEvent: MessageEvent) => {
+      console.log('WebSocket message received:', messageEvent.data);
+
+      const messageData = JSON.parse(messageEvent.data);
+      // if (messageData.hasOwnProperty('ready') && messageData.ready === true) {
+      //   this.sharedDataService.type = 'BROADCAST';
+      // }
+      switch (this.sharedDataService.type) {
+        case 'MOVEMENT':
+
+          break;
+        case 'CHAT':
+
+          break;
+        case 'BROADCAST':
+
+          break;
+        default:
+          console.warn('Unrecognized message type:', messageData.type);
+      }
     });
 
   }

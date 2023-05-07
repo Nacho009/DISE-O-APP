@@ -34,33 +34,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
       const messageData = JSON.parse(messageEvent.data);
       if (messageData.hasOwnProperty('ready') && messageData.ready === true) {
-        this.sharedDataService.type = 'BROADCAST';
-      }
-      switch (this.sharedDataService.type) {
-        case 'MOVEMENT':
-
-          break;
-        case 'CHAT':
-
-          break;
-        case 'BROADCAST':
-          console.log("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
-          break;
-        default:
-          console.warn('Unrecognized message type:', messageData.type);
+        this.router.navigate(['/juego']);
       }
     });
   }
   ngOnDestroy() {
     this.websocketService.disconnect();
-  }
-
-  comprobar(jugadores: number) {
-
-    if (this.jugadores == 2) {
-      this.router.navigate(['/juego']);
-    }
-
   }
 
   async requestGame(juego: String) {
@@ -73,7 +52,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.toastr.success('Juego solicitado correctamente', 'Éxito');
         this.jugadores = response.players.length;
         if (this.jugadores == 2) {
-          console.log(JSON.stringify(response));
           await this.websocketService.sendBroadcast(JSON.stringify(response));
         }
       } catch (error) {

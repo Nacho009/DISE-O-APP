@@ -32,8 +32,9 @@ public class GamesService {
 		return match;
 	}
 
-	public List<List<Integer>> requestBoard(){
-		return convertToIntegerList(this.matches.get("nm").getBoards().get(0).getDigits());
+	public List<List<Integer>> requestBoard(String player){
+		int pos = this.matches.get("nm").getPlayers().indexOf(player);
+		return convertToIntegerList(this.matches.get("nm").getBoards().get(pos).getDigits());
 	}
 
 	public List<List<Integer>> convertToIntegerList(byte[][] byteArray) {
