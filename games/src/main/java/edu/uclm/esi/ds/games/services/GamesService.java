@@ -4,6 +4,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -45,6 +47,27 @@ public class GamesService {
 
 		return requestBoard(move.getPlayer().getName());
 	}
+
+	public List<List<Integer>> añadirDigitos(String player){
+
+		SecureRandom dado = new SecureRandom();
+		int pos = this.matches.get("nm").getPlayers().indexOf(player);
+		
+		int generados=dado.nextInt(15,30);
+
+		for(int i=0; i<9; i++) {
+			
+			for(int j=0; j<9; j++) {
+				
+				if(this.matches.get("nm").getBoards().get(pos).getDigits()[i][j] == 0 && generados !=0){
+					generados--;
+					this.matches.get("nm").getBoards().get(pos).getDigits()[i][j] = (byte) dado.nextInt(1,10);		
+				}
+			}
+		}
+		return requestBoard(player);
+	}
+
 	public Match requestGame(String juego, String player) {
 		
 		Match match = this.waitingRoom.findMatch(juego,player);

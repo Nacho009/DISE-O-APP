@@ -68,7 +68,7 @@ public class WSGames extends TextWebSocketHandler {
 			this.move(jso, session);
 			
 		}else if (type.equals("CHAT")){ //tendrán el target (a quien van) y el message
-			this.chat(jso);
+			this.chat(jso, session);
 			
 		}else if(type.equals("BROADCAST")) { // tendrán el message
 			this.broadcast(jso);
@@ -121,16 +121,14 @@ public class WSGames extends TextWebSocketHandler {
 
 	}
 	
-	private void chat(JSONObject jso) {
+	private void chat(JSONObject jso, WebSocketSession session) {
 		// TODO Auto-generated method stub
 		String target = jso.getString("target");
     	String message = jso.getString("message");
 
     // PRUEBA FUNCIONAMIENTO
 
-    	for (WebSocketSession session : this.sessions) {
-        	this.send(session, "type", "CHAT_RESULT", "message", "Mensaje enviado a " + target + ": " + message);
-    	}
+        this.send(session, "type", "CHAT_RESULT", "message", "Mensaje enviado a " + target + ": " + message);
 	}
 	private void broadcast(JSONObject jso) {
 		

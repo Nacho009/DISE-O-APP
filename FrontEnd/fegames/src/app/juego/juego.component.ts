@@ -85,21 +85,21 @@ export class JuegoComponent implements OnInit {
     }
 
     // Verifica que los valores en las celdas sean iguales.
-    if (
-      this.byteArray[move.row1][move.col1] !==
-      this.byteArray[move.row2][move.col2]
-    ) {
+    if ((this.byteArray[move.row1][move.col1] !== this.byteArray[move.row2][move.col2]) || ((this.byteArray[move.row2][move.col2]) + (this.byteArray[move.row1][move.col1])) === 10  ){
       return false;
     }
 
     // Verifica si el movimiento es adyacente, si los números intermedios son 0 o si es un movimiento especial.
-    if (!this.esAdyacente(move) && !this.numerosIntermediosSonCero(move) && !this.esMovimientoEspecial(move)) {
+    if (!this.esAdyacente(move) && !this.numerosIntermediosSonCero(move) && !this.esMovimientoEspecial(move) && !this.sumaDiez(move)) {
       return false;
     }
     // Si todas las condiciones se cumplen, el movimiento es válido.
     return true;
   }
 
+  sumaDiez(move: Move) {
+    return (this.byteArray[move.row1][move.col1] + this.byteArray[move.row2][move.col2]) === 10;
+  }
   indicesDentroDelRango(row: number, col: number) {
     const size = this.byteArray.length;
     return row >= 0 && row < size && col >= 0 && col < size;
@@ -194,7 +194,13 @@ export class JuegoComponent implements OnInit {
 
   onAddDigitsClick(): void {
     console.log('Agregar dígitos');
-    // CONECTAR BACK
+
+    this.gameService
+    .getDigits(this.sharedDataService.username)
+    .subscribe((integerList) => {
+      this.byteArray = integerList;
+    });
+
   }
 
   onSendMessageClick(): void {

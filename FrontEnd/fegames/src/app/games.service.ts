@@ -32,4 +32,9 @@ export class GamesService {
     return this.httpClient.get<number[][]>(`http://localhost:80/games/requestBoard?player=${player}`);
   }
 
+  getDigits(player: String): Observable<number[][]> {
+    return this.httpClient.get<number[][]>(`http://localhost:80/games/requestDigits?player=${player}`);
+  }
+
+
 }

@@ -40,11 +40,10 @@ public class GamesController {
 		return this.gamesService.requestBoard(player);
 	}
 
+	@GetMapping("/requestDigits") 
+	public List<List<Integer>> requestDigits(@RequestParam String player) { 
+		return this.gamesService.añadirDigitos(player);
+	}
+
 }
-//en el back_end vamos a tener:
-//controladores del back_end, estos .java como gamesController
-//para los controller tendremos otros .java para los service
-//y luego esos service se conectaran a unos .java que van a ser los dao que van a conectar con la base de datos
-//para manejar esos dao vamos a tener unas clases propias para manejar cada uno de los dao, y esas clases tienen 
-//que tener una referencia en la tabla de la base de datos(a lo mejor tenemos que modificar el nombre porque sea una
-//palabra que ya esté reservada
+
