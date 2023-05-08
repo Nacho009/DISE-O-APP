@@ -13,6 +13,7 @@ import edu.uclm.esi.ds.games.dao.UserDAO;
 import edu.uclm.esi.ds.games.domain.Match;
 import edu.uclm.esi.ds.games.domain.WaitingRoom;
 import edu.uclm.esi.ds.games.entities.Game;
+import edu.uclm.esi.ds.games.entities.Move;
 import edu.uclm.esi.ds.games.entities.User;
 
 @Service
@@ -35,6 +36,15 @@ public class GamesService {
 		
 	}
 	
+	public List<List<Integer>> updateMove(Move move){
+
+		int pos = this.matches.get("nm").getPlayers().indexOf(move.getPlayer().getName());
+
+		this.matches.get("nm").getBoards().get(pos).getDigits()[move.getRow1()][move.getCol1()]=0;
+		this.matches.get("nm").getBoards().get(pos).getDigits()[move.getRow2()][move.getCol2()]=0;
+
+		return requestBoard(move.getPlayer().getName());
+	}
 	public Match requestGame(String juego, String player) {
 		
 		Match match = this.waitingRoom.findMatch(juego,player);

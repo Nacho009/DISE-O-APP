@@ -2,7 +2,8 @@ package edu.uclm.esi.ds.games.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -14,8 +15,11 @@ import jakarta.persistence.Table;
 public class Move {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
+    @Column(nullable = false)
+    private Long numMove;
     @ManyToOne
     private Game game;
     @OneToOne
@@ -30,8 +34,8 @@ public class Move {
     private int col2;
 
     
-    public Move(Long id, Game game, User player, int row1, int col1,int row2, int col2) {
-        this.id = id;
+    public Move(Long numMove, Game game, User player, int row1, int col1,int row2, int col2) {
+        this.numMove = numMove;
         this.game = game;
         this.player = player;
         this.row1 = row1;
@@ -103,6 +107,12 @@ public class Move {
     }
     public void setCol2(int col2) {
         this.col2 = col2;
+    }
+    public Long getNumMove() {
+        return numMove;
+    }
+    public void setNumMove(Long numMove) {
+        this.numMove = numMove;
     }
 
     

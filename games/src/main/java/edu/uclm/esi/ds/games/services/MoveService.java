@@ -11,7 +11,10 @@ public class MoveService {
     
     @Autowired
     private MoveDAO moveDAO;
+
     public void guardar(Move move){
-		moveDAO.save(move);
-	}
+		  moveDAO.save(move);
+	  }
+
+    
 }
