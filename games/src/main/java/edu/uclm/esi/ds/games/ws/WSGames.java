@@ -26,13 +26,11 @@ import edu.uclm.esi.ds.games.services.UsersService;
 public class WSGames extends TextWebSocketHandler {
 	private ArrayList<WebSocketSession> sessions = new ArrayList<>();
 
-	private  static GamesService gameService;
+	private static GamesService gameService;
 
-	@Autowired
-	private UsersService userService;
+	private static UsersService userService;
 
-	@Autowired
-	private MoveService moveService;
+	private static MoveService moveService;
 
 
 	@Override
@@ -141,6 +139,16 @@ public class WSGames extends TextWebSocketHandler {
 	@Autowired
 	public void setGamesService(GamesService gameService) {
 		WSGames.gameService = gameService;
+	}
+
+	@Autowired
+	public void setMoveService(MoveService moveService) {
+		WSGames.moveService = moveService;
+	}
+
+	@Autowired
+	public void setUsersService(UsersService userService) {
+		WSGames.userService = userService;
 	}
 
 	@Override
