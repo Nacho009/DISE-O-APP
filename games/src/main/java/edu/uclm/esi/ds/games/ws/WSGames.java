@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+
+import java.util.List;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -97,6 +99,10 @@ public class WSGames extends TextWebSocketHandler {
 	}
 
 
+	/**
+	 * @param jso
+	 * @param session
+	 */
 	private void move(JSONObject jso, WebSocketSession session) {
 
 		String idMatch = jso.getString("idMatch");
@@ -114,10 +120,20 @@ public class WSGames extends TextWebSocketHandler {
 		moveService.guardar(move);
 
 		Gson gson = new Gson();
+		List<List<Integer>> tablero =gameService.updateMove(move);
 		String updatedMoveJson = gson.toJson(gameService.updateMove(move));
 
+		if(gameService.esGanador(tablero, userName)){
+			game.setWinner(user);
+			if(!user.equals(game.getPlayer1())){
+				game.setLoser(game.getPlayer1());
+			}
+			this.send(session, "type", "FIN", "message", game.getWinner().getName());
 
-    	this.send(session, "type", "MOVEMENT", "message", updatedMoveJson);
+		}else{
+			this.send(session, "type", "MOVEMENT", "message", updatedMoveJson);
+		}
+
 
 	}
 	

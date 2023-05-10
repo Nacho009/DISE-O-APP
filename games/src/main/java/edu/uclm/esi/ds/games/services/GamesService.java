@@ -48,6 +48,24 @@ public class GamesService {
 		return requestBoard(move.getPlayer().getName());
 	}
 
+	public boolean esGanador(List<List<Integer>> tablero, String player){
+
+		boolean ganador=false;
+		int pos = this.matches.get("nm").getPlayers().indexOf(player);
+
+		int cont=0;
+		for(int i=0; i<9; i++) {
+			for(int j=0; j<9; j++) {
+				if(this.matches.get("nm").getBoards().get(pos).getDigits()[i][j]==0){
+					cont++;
+				}
+			}
+		}
+		if(cont==49){
+			ganador=true;
+		}
+		return ganador;
+	}
 	public List<List<Integer>> añadirDigitos(String player){
 
 		SecureRandom dado = new SecureRandom();

@@ -62,7 +62,8 @@ export class JuegoComponent implements OnInit {
             text: messageData.text,
           });
           break;
-        case 'BROADCAST':
+        case 'FIN':
+          // añadir algo al ganador
           break;
         default:
         // console.warn('Unrecognized message type:', messageData.type);
