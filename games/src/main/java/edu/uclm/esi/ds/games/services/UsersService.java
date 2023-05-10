@@ -7,7 +7,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import edu.uclm.esi.ds.games.dao.UserDAO;
 import edu.uclm.esi.ds.games.entities.User;
-import edu.uclm.esi.ds.games.ws.WSGames;
 
 @Service
 public class UsersService {
