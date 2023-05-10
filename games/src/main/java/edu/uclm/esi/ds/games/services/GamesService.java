@@ -71,7 +71,7 @@ public class GamesService {
 		SecureRandom dado = new SecureRandom();
 		int pos = this.matches.get("nm").getPlayers().indexOf(player);
 		
-		int generados=dado.nextInt(15,30);
+		int generados=dado.nextInt(10,15);
 
 		for(int i=0; i<9; i++) {
 			
