@@ -48,6 +48,9 @@ public class GamesService {
 		return requestBoard(move.getPlayer().getName());
 	}
 
+	public void guardar (Game game){
+		gameRepository.save(game);
+	}
 	public boolean esGanador(List<List<Integer>> tablero, String player){
 
 		boolean ganador=false;
@@ -58,10 +61,12 @@ public class GamesService {
 			for(int j=0; j<9; j++) {
 				if(this.matches.get("nm").getBoards().get(pos).getDigits()[i][j]==0){
 					cont++;
+				}else{
+					return ganador;
 				}
 			}
 		}
-		if(cont==49){
+		if(cont==81){
 			ganador=true;
 		}
 		return ganador;
@@ -97,6 +102,8 @@ public class GamesService {
 
 			Game game=new Game(match.getId(), user1, user2);
 
+			this.waitingRoom.setMatches(new ConcurrentHashMap<>());
+			
 			gameRepository.save(game);
 		}
 

@@ -121,6 +121,9 @@ public class WSGames extends TextWebSocketHandler {
 
 		Gson gson = new Gson();
 		List<List<Integer>> tablero =gameService.updateMove(move);
+
+// Recorriendo y modificando el tablero
+
 		String updatedMoveJson = gson.toJson(tablero);
 
 		if(gameService.esGanador(tablero, userName)){
@@ -128,6 +131,7 @@ public class WSGames extends TextWebSocketHandler {
 			if(!user.equals(game.getPlayer1())){
 				game.setLoser(game.getPlayer1());
 			}
+			gameService.guardar(game);
 			this.send(session, "type", "FIN", "message", game.getWinner().getName());
 
 		}else{

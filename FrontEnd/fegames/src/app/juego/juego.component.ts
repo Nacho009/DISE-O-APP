@@ -13,8 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class JuegoComponent implements OnInit {
   byteArray: number[][] = [];
-  chatMessages: Array<{ author: string; text: string }> = []; // Añadir variable para almacenar los mensajes del chat
-  newMessage: string = ''; // Añadir variable para almacenar el mensaje que el usuario está escribiendo
+  chatMessages: Array<{ author: string; text: string }> = []; 
+  newMessage: string = '';
   movimientos!: number;
   apto!: number;
   row1!: number;
@@ -66,8 +66,10 @@ export class JuegoComponent implements OnInit {
           });
           break;
         case 'FIN':
-          // añadir algo al ganador
-          break;
+
+        this.router.navigate(['/ganador']); 
+
+        break;
         default:
         // console.warn('Unrecognized message type:', messageData.type);
       }

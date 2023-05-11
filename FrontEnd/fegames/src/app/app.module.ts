@@ -12,7 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { JuegoComponent } from './juego/juego.component';
-import { ResultadosComponent } from './resultados/resultados.component';
+import { GanadorPartidaComponent } from './resultados/ganador-partida.component';
 import { AdministracionComponent } from './administracion/administracion.component';
 
 @NgModule({
@@ -22,7 +22,7 @@ import { AdministracionComponent } from './administracion/administracion.compone
     LoginComponent,
     HomeComponent,
     JuegoComponent,
-    ResultadosComponent,
+    GanadorPartidaComponent,
     AdministracionComponent,
   ],
   imports: [

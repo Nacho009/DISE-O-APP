@@ -32,4 +32,8 @@ public class WaitingRoom {
 		return match;
 	}
 
+	public void setMatches(ConcurrentHashMap<String, Match> matches) {
+		this.matches = matches;
+	}
+
 }
