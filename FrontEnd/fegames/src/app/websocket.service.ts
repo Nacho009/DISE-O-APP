@@ -63,11 +63,11 @@ export class WebSocketService {
     });
   }
 
-  sendChat(target: string, message: string) {
+  sendChat(emisor: string, message: string) {
     this.connect(this.url).subscribe(() => {
       const chatMessage = {
         type: 'CHAT',
-        target: target,
+        emisor: emisor,
         message: message,
       };
       this.socket.send(JSON.stringify(chatMessage));

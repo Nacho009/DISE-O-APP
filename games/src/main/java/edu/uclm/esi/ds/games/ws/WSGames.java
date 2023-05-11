@@ -51,12 +51,6 @@ public class WSGames extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
-        System.out.println(sessions.size());
-
-        // Crear un mensaje con el número de sesión y enviarlo al cliente
-        // String sessionNumber = String.valueOf(sessions.size());
-        // TextMessage sessionNumberMessage = new TextMessage("sessionNumber:" + sessionNumber);
-        // session.sendMessage(sessionNumberMessage);
     }
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -70,7 +64,7 @@ public class WSGames extends TextWebSocketHandler {
 			this.move(jso, session);
 			
 		}else if (type.equals("CHAT")){ //tendrán el target (a quien van) y el message
-			this.chat(jso, session);
+			this.chat(jso);
 			
 		}else if(type.equals("BROADCAST")) { // tendrán el message
 			this.broadcast(jso);
@@ -133,6 +127,11 @@ public class WSGames extends TextWebSocketHandler {
 			}
 			gameService.guardar(game);
 			this.send(session, "type", "FIN", "message", game.getWinner().getName());
+			JSONObject jso2 = new JSONObject();
+			jso2.put("type", "FIN");
+			jso2.put("message",  "ganador: " + game.getWinner().getName());
+		
+			this.broadcast(jso2);
 
 		}else{
 			this.send(session, "type", "MOVEMENT", "message", updatedMoveJson);
@@ -141,14 +140,14 @@ public class WSGames extends TextWebSocketHandler {
 
 	}
 	
-	private void chat(JSONObject jso, WebSocketSession session) {
+	private void chat(JSONObject jso) {
 		// TODO Auto-generated method stub
-		String target = jso.getString("target");
+		String emisor = jso.getString("emisor");
     	String message = jso.getString("message");
 
-    // PRUEBA FUNCIONAMIENTO
-
-        this.send(session, "type", "CHAT_RESULT", "message", "Mensaje enviado a " + target + ": " + message);
+    	for (WebSocketSession session : this.sessions) {
+        	this.send(session, "type", "CHAT","emisor",emisor, "message", message);
+    	}
 	}
 	private void broadcast(JSONObject jso) {
 		

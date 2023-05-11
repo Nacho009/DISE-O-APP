@@ -20,7 +20,7 @@ export class JuegoComponent implements OnInit {
   row1!: number;
   col1!: number;
   vale: Boolean;
-
+  autor!: string;
 
   constructor(
     private websocketService: WebSocketService,
@@ -44,7 +44,7 @@ export class JuegoComponent implements OnInit {
     this.websocketService.connect('ws://localhost:80/wsGames').subscribe();
 
     this.websocketService.socket$.subscribe((messageEvent: MessageEvent) => {
-      // console.log('WebSocket message received:', messageEvent.data);
+      console.log('WebSocket message received:', messageEvent.data);
       // console.log(messageEvent);
 
       const messageData = JSON.parse(messageEvent.data);
@@ -59,11 +59,21 @@ export class JuegoComponent implements OnInit {
 
           break;
         case 'CHAT':
-          // Añadir la lógica para manejar el mensaje de chat recibido
-          this.chatMessages.push({
-            author: messageData.author,
-            text: messageData.text,
-          });
+
+        if (messageData.emisor !== this.sharedDataService.username) {
+
+          const messageExists = this.chatMessages.some(
+            (message) => message.text === messageData.message
+          );
+        
+          if (!messageExists) {
+            this.chatMessages.push({
+              author: this.autor,
+              text: messageData.message,
+            });
+          }
+        }
+        
           break;
         case 'FIN':
 
@@ -89,33 +99,27 @@ export class JuegoComponent implements OnInit {
 
     // Verifica que las celdas no sean las mismas.
     if (move.row1 === move.row2 && move.col1 === move.col2) {
-      console.log("SON LAS MISMAS")
       this.vale = false;
     }else{
-      console.log("SON LAS MISMASssss")
       this.vale = true;
     }
 
     // Verifica que los valores en las celdas sean iguales.
 // Verifica que los valores en las celdas sean iguales o no sumen 10.
     if ((this.byteArray[move.row1][move.col1] !== this.byteArray[move.row2][move.col2])) {
-      console.log("NO CUMPLEN LA CONDICIÓN");
       this.vale = false;
       if(((this.byteArray[move.row2][move.col2]) + (this.byteArray[move.row1][move.col1])) === 10){
         this.vale = true;
       }
       if (!this.esAdyacente(move) && !this.numerosIntermediosSonCero(move) && !this.esMovimientoEspecial(move) ) {
-        console.log("SE QUEDA AQUI")
         this.vale = false;
       }
     }else{
       this.vale = true;
       if (move.row1 === move.row2 && move.col1 === move.col2) {
-        console.log("SON LAS MISMAS")
         this.vale = false;
       }
       if (!this.esAdyacente(move) && !this.numerosIntermediosSonCero(move) && !this.esMovimientoEspecial(move)) {
-        console.log("SE QUEDA AQUI")
         this.vale = false;
       }
     }
@@ -233,7 +237,7 @@ export class JuegoComponent implements OnInit {
   onSendMessageClick(): void {
     console.log('Enviar mensaje:', this.newMessage);
     // Lógica para enviar el mensaje de chat a través del WebSocket
-    this.websocketService.sendChat('all', this.newMessage); // 'all' es un ejemplo de cómo indicar un mensaje global a todos los usuarios
+    this.websocketService.sendChat(this.sharedDataService.username.toString(), this.newMessage); // 'all' es un ejemplo de cómo indicar un mensaje global a todos los usuarios
     // Vaciar el campo de entrada después de enviar el mensaje
     this.newMessage = '';
   }
