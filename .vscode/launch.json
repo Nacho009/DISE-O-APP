@@ -1,7 +1,13 @@
 {
     "version": "0.2.0",
     "configurations": [
-        
+      {
+        "type": "java",
+        "name": "LanzadoraGames",
+        "request": "launch",
+        "mainClass": "edu.uclm.esi.ds.games.LanzadoraGames",
+        "projectName": "games"
+      },
       {
         "name": "debug ng serve",
         "type": "chrome",
@@ -25,7 +31,9 @@
         "type": "node",
         "request": "launch",
         "program": "C:/Users/nacho/OneDrive/Documentos/GitHub/DISENO-APP/FrontEnd/fegames/node_modules/protractor/bin/protractor",
-        "args": ["C:/Users/nacho/OneDrive/Documentos/GitHub/DISENO-APP/FrontEnd/fegames/e2e/protractor.conf.js"]
+        "args": [
+          "C:/Users/nacho/OneDrive/Documentos/GitHub/DISENO-APP/FrontEnd/fegames/e2e/protractor.conf.js"
+        ]
       }
     ]
   }

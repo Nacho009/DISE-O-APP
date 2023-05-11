@@ -19,6 +19,8 @@ export class JuegoComponent implements OnInit {
   apto!: number;
   row1!: number;
   col1!: number;
+  vale: Boolean;
+
 
   constructor(
     private websocketService: WebSocketService,
@@ -29,6 +31,7 @@ export class JuegoComponent implements OnInit {
   ) {
     this.movimientos = 0;
     this.apto = 0;
+    this.vale=false;
   }
 
   ngOnInit(): void {
@@ -41,8 +44,8 @@ export class JuegoComponent implements OnInit {
     this.websocketService.connect('ws://localhost:80/wsGames').subscribe();
 
     this.websocketService.socket$.subscribe((messageEvent: MessageEvent) => {
-      console.log('WebSocket message received:', messageEvent.data);
-      console.log(messageEvent);
+      // console.log('WebSocket message received:', messageEvent.data);
+      // console.log(messageEvent);
 
       const messageData = JSON.parse(messageEvent.data);
 
@@ -77,25 +80,46 @@ export class JuegoComponent implements OnInit {
       !this.indicesDentroDelRango(move.row1, move.col1) ||
       !this.indicesDentroDelRango(move.row2, move.col2)
     ) {
-      return false;
+      this.vale = false;
+    }else{
+      this.vale = true;
     }
 
     // Verifica que las celdas no sean las mismas.
     if (move.row1 === move.row2 && move.col1 === move.col2) {
-      return false;
+      console.log("SON LAS MISMAS")
+      this.vale = false;
+    }else{
+      console.log("SON LAS MISMASssss")
+      this.vale = true;
     }
 
     // Verifica que los valores en las celdas sean iguales.
-    if ((this.byteArray[move.row1][move.col1] !== this.byteArray[move.row2][move.col2]) || ((this.byteArray[move.row2][move.col2]) + (this.byteArray[move.row1][move.col1])) === 10  ){
-      return false;
+// Verifica que los valores en las celdas sean iguales o no sumen 10.
+    if ((this.byteArray[move.row1][move.col1] !== this.byteArray[move.row2][move.col2])) {
+      console.log("NO CUMPLEN LA CONDICIÓN");
+      this.vale = false;
+      if(((this.byteArray[move.row2][move.col2]) + (this.byteArray[move.row1][move.col1])) === 10){
+        this.vale = true;
+      }
+      if (!this.esAdyacente(move) && !this.numerosIntermediosSonCero(move) && !this.esMovimientoEspecial(move) ) {
+        console.log("SE QUEDA AQUI")
+        this.vale = false;
+      }
+    }else{
+      this.vale = true;
+      if (move.row1 === move.row2 && move.col1 === move.col2) {
+        console.log("SON LAS MISMAS")
+        this.vale = false;
+      }
+      if (!this.esAdyacente(move) && !this.numerosIntermediosSonCero(move) && !this.esMovimientoEspecial(move)) {
+        console.log("SE QUEDA AQUI")
+        this.vale = false;
+      }
     }
 
-    // Verifica si el movimiento es adyacente, si los números intermedios son 0 o si es un movimiento especial.
-    if (!this.esAdyacente(move) && !this.numerosIntermediosSonCero(move) && !this.esMovimientoEspecial(move) && !this.sumaDiez(move)) {
-      return false;
-    }
     // Si todas las condiciones se cumplen, el movimiento es válido.
-    return true;
+    return this.vale;
   }
 
   sumaDiez(move: Move) {

@@ -121,7 +121,7 @@ public class WSGames extends TextWebSocketHandler {
 
 		Gson gson = new Gson();
 		List<List<Integer>> tablero =gameService.updateMove(move);
-		String updatedMoveJson = gson.toJson(gameService.updateMove(move));
+		String updatedMoveJson = gson.toJson(tablero);
 
 		if(gameService.esGanador(tablero, userName)){
 			game.setWinner(user);
