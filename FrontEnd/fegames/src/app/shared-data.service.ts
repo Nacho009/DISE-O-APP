@@ -8,6 +8,8 @@ export class SharedDataService {
   match: String[] =[];
   type: any;
   id: String;
+  ganador: String;
+
 
   
 
@@ -16,5 +18,7 @@ export class SharedDataService {
     this.match = [];
     this.type = '';
     this.id='';
+    this.ganador='';
+
   }
 }

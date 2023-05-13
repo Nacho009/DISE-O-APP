@@ -34,4 +34,9 @@ export class LoginComponent implements OnInit {
     this.sharedDataService.username = this.model.username;
 
 }
+
+register(){
+
+  this.router.navigate(['/register'])
+}
 }

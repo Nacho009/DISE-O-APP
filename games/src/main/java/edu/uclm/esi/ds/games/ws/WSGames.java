@@ -68,7 +68,9 @@ public class WSGames extends TextWebSocketHandler {
 			
 		}else if(type.equals("BROADCAST")) { // tendrán el message
 			this.broadcast(jso);
-			
+		
+		}else if(type.equals("GANADOR")){
+			this.ganador(jso);
 		}else {
 			this.send(session,"type","ERROR","message","Mensaje no reconocido");
 		}
@@ -126,13 +128,9 @@ public class WSGames extends TextWebSocketHandler {
 				game.setLoser(game.getPlayer1());
 			}
 			gameService.guardar(game);
-			this.send(session, "type", "FIN", "message", game.getWinner().getName());
-			JSONObject jso2 = new JSONObject();
-			jso2.put("type", "FIN");
-			jso2.put("message",  "ganador: " + game.getWinner().getName());
-		
-			this.broadcast(jso2);
-
+			for (WebSocketSession s : this.sessions) {
+				this.send(s, "type", "FIN", "message", game.getWinner().getName());
+			}
 		}else{
 			this.send(session, "type", "MOVEMENT", "message", updatedMoveJson);
 		}
@@ -149,6 +147,14 @@ public class WSGames extends TextWebSocketHandler {
         	this.send(session, "type", "CHAT","emisor",emisor, "message", message);
     	}
 	}
+	private void ganador(JSONObject jso) {
+		// TODO Auto-generated method stub
+		String ganador = jso.getString("ganador");
+
+    	for (WebSocketSession session : this.sessions) {
+        	this.send(session, "type", "GANADOR", "message", ganador);
+    	}
+	}
 	private void broadcast(JSONObject jso) {
 		
 		TextMessage message = new TextMessage(jso.getString("message")); 
@@ -158,7 +164,9 @@ public class WSGames extends TextWebSocketHandler {
 				@Override
 				public void run() {
 					try {
-						client.sendMessage(message);
+						if(client!=null){
+							client.sendMessage(message);
+						}
 					} catch (IOException e) {
 						WSGames.this.sessions.remove(client); 
 					}

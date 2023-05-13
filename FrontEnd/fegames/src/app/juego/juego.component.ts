@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 import { GamesService } from '../games.service';
 import { SharedDataService } from '../shared-data.service';
 import { Router } from '@angular/router';
@@ -77,15 +77,27 @@ export class JuegoComponent implements OnInit {
           break;
         case 'FIN':
 
+        this.sharedDataService.ganador=messageData.message
         this.router.navigate(['/ganador']); 
 
         break;
+
+        case 'GANADOR':
+
+        this.sharedDataService.ganador=messageData.message
+        this.router.navigate(['/ganador']); 
+
+          break;
+
         default:
         // console.warn('Unrecognized message type:', messageData.type);
       }
     });
   }
 
+  ngOnDestroy(){
+    this.websocketService.disconnect()
+  }
   valido(move: Move) {
     // Verifica que los índices estén dentro del rango del tablero.
     if (

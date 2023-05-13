@@ -61,12 +61,10 @@ public class GamesService {
 			for(int j=0; j<9; j++) {
 				if(this.matches.get("nm").getBoards().get(pos).getDigits()[i][j]==0){
 					cont++;
-				}else{
-					return ganador;
 				}
 			}
 		}
-		if(cont==81){
+		if(cont > 60){
 			ganador=true;
 		}
 		return ganador;

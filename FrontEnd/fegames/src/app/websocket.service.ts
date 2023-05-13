@@ -74,6 +74,16 @@ export class WebSocketService {
     });
   }
 
+  sendGanador(ganador: String) {
+    this.connect(this.url).subscribe(() => {
+      const chatMessage = {
+        type: 'GANADOR',
+        ganador: ganador,
+      };
+      this.socket.send(JSON.stringify(chatMessage));
+    });
+  }
+
   sendBroadcast(message: String): Promise<void> {
     return new Promise((resolve) => {
       this.connect(this.url).subscribe(() => {
